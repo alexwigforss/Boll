@@ -2,6 +2,7 @@
 
 namespace Boll
 {
+    // Integral vektor för position och hastighet i x & y-led
     public struct V2
     {
         public int x;
@@ -12,6 +13,8 @@ namespace Boll
 
     public class Boll
     {
+        static int width = 80;
+        static int height = 40;
         V2 xy;
         V2 xyPrev;
         V2 speed;
@@ -50,9 +53,9 @@ namespace Boll
         }
         public void CheckWalls()
         {
-            if (xy.x + speed.x >= 40 || xy.x + speed.x < 0)
+            if (xy.x + speed.x >= width || xy.x + speed.x < 0)
                 speed.x *= -1;
-            if (xy.y + speed.y >= 20 || xy.y + speed.y < 0)
+            if (xy.y + speed.y >= height || xy.y + speed.y < 0)
                 speed.y *= -1;
         }
         public void Move()
@@ -61,34 +64,8 @@ namespace Boll
             xyPrev = xy;
             xy.x += speed.x;
             xy.y += speed.y;
-
-            //if (Math.Abs(speed.x) == Math.Abs(speed.y))
-            //{
-            //    xy.x += speed.x;
-            //    xy.y += speed.y;
-            //}
-            //else if (horizontal == true)
-            //{
-            //    xy.x += speed.x / speed.x;
-            //    if (diffCount == 0)
-            //    {
-            //        if (xy.y + speed.y >= 20 || xy.y + speed.y < 0)
-            //            xy.y += speed.y;
-            //    }
-            //    diffCount = (diffCount > 0) ? diffCount - 1 : xyDiff;
-            //}
-            //else if (horizontal == false)
-            //{
-            //    xy.y += speed.y / speed.y;
-            //    if (diffCount == 0)
-            //    {
-            //        if (xy.x + speed.x >= 40 || xy.x + speed.x < 0)
-            //            xy.x += speed.x;
-            //    }
-            //    diffCount = (diffCount > 0) ? diffCount - 1 : xyDiff;
-            //}
-
         }
+
         public void PrintSelf()
         {
             SetCursorPosition(xy.x, xy.y);
@@ -112,12 +89,11 @@ namespace Boll
         static int sec_scince_start;
         static int steps_scince_start;
 
-        int width = 40;
-        int height = 20;
+        static int width = 80;
+        static int height = 40;
 
         public static System.Timers.Timer aTimer;
         public static System.Timers.Timer timestep;
-
 
         static void Main(string[] args)
         {
@@ -135,33 +111,40 @@ namespace Boll
             timestep.Start();
 
             SetWindowSize(1, 1);
-            SetBufferSize(40, 20);
-            SetWindowSize(40, 20);
+            SetBufferSize(width, height);
+            SetWindowSize(width, height);
             CursorVisible = false;
 
             int sec = sec_scince_start;
             bollen.PrintSelf();
             boll2.PrintSelf();
+
+
             while (true)
             {
-                SetCursorPosition(35, 1);
-                Write(sec_scince_start);
-                // SetCursorPosition(35, 3);
-                // Write(steps_scince_start);
-                // Write(bollen.XyToString());
-                // Write(steps_scince_start);
 
-                if (sec_scince_start > sec)
-                {
-                    bollen.Move();
-                    boll2.Move();
-                    sec = sec_scince_start;
-                    bollen.PrintSelfClearTrail();
-                    boll2.PrintSelfClearTrail();
-                }
+                    SetCursorPosition(75, 1);
+                    Write(sec_scince_start);
+
+                    if (sec_scince_start > sec)
+                    {
+                        bollen.Move();
+                        boll2.Move();
+                        sec = sec_scince_start;
+                        bollen.PrintSelfClearTrail();
+                        boll2.PrintSelfClearTrail();
+                    }
+                
+
             }
-        }
 
+
+        }
+        private static void FlushKeyboard()
+        {
+            while (Console.In.Peek() != -1)
+                Console.In.Read();
+        }
         public static void TimerEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
             sec_scince_start++;
