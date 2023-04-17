@@ -55,49 +55,45 @@ namespace Boll
             if (xy.y + speed.y >= 20 || xy.y + speed.y < 0)
                 speed.y *= -1;
         }
-        //public bool CheckPos(V2 pos)
-        //{
-        //    if (pos.x >= 40 || pos.x < 0)
-        //        speed.x *= -1;
-        //    if (pos.y >= 20 || pos.y < 0)
-        //        speed.y *= -1;
-        //}
         public void Move()
         {
             CheckWalls();
             xyPrev = xy;
-            if (Math.Abs(speed.x) == Math.Abs(speed.y))
-            {
-                xy.x += speed.x;
-                xy.y += speed.y;
-            }
-            else if (horizontal == true)
-            {
-                xy.x += speed.x / speed.x;
-                if (diffCount == 0)
-                {
-                    if (xy.y + speed.y >= 20 || xy.y + speed.y < 0)
-                        xy.y += speed.y;
-                }
-                diffCount = (diffCount > 0) ? diffCount - 1 : xyDiff;
-            }
-            else if (horizontal == false)
-            {
-                xy.y += speed.y / speed.y;
-                if (diffCount == 0)
-                {
-                    if (xy.x + speed.x >= 40 || xy.x + speed.x < 0)
-                        xy.x += speed.x;
-                }
-                diffCount = (diffCount > 0) ? diffCount - 1 : xyDiff;
-            }
+            xy.x += speed.x;
+            xy.y += speed.y;
+
+            //if (Math.Abs(speed.x) == Math.Abs(speed.y))
+            //{
+            //    xy.x += speed.x;
+            //    xy.y += speed.y;
+            //}
+            //else if (horizontal == true)
+            //{
+            //    xy.x += speed.x / speed.x;
+            //    if (diffCount == 0)
+            //    {
+            //        if (xy.y + speed.y >= 20 || xy.y + speed.y < 0)
+            //            xy.y += speed.y;
+            //    }
+            //    diffCount = (diffCount > 0) ? diffCount - 1 : xyDiff;
+            //}
+            //else if (horizontal == false)
+            //{
+            //    xy.y += speed.y / speed.y;
+            //    if (diffCount == 0)
+            //    {
+            //        if (xy.x + speed.x >= 40 || xy.x + speed.x < 0)
+            //            xy.x += speed.x;
+            //    }
+            //    diffCount = (diffCount > 0) ? diffCount - 1 : xyDiff;
+            //}
 
         }
         public void PrintSelf()
         {
             SetCursorPosition(xy.x, xy.y);
-            //Write("O");
-            Write(diffCount);
+            Write("O");
+            // Write(diffCount);
         }
         public void PrintSelfClearTrail()
         {
@@ -127,7 +123,7 @@ namespace Boll
         {
             Boll bollen, boll2;
             bollen = new Boll(new V2(5, 5), new V2(1, 1));
-            boll2 = new Boll(new V2(10, 3), new V2(1, 2));
+            boll2 = new Boll(new V2(10, 3), new V2(2, 1));
             aTimer = new System.Timers.Timer();
             aTimer.Interval = 250;
             aTimer.Elapsed += TimerEvent;
@@ -145,7 +141,7 @@ namespace Boll
 
             int sec = sec_scince_start;
             bollen.PrintSelf();
-            // boll2.PrintSelf();
+            boll2.PrintSelf();
             while (true)
             {
                 SetCursorPosition(35, 1);
@@ -158,10 +154,10 @@ namespace Boll
                 if (sec_scince_start > sec)
                 {
                     bollen.Move();
-                    // boll2.Move();
+                    boll2.Move();
                     sec = sec_scince_start;
                     bollen.PrintSelfClearTrail();
-                    // boll2.PrintSelfClearTrail();
+                    boll2.PrintSelfClearTrail();
                 }
             }
         }
