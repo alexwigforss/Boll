@@ -145,23 +145,23 @@ namespace Boll
 
             int sec = sec_scince_start;
             bollen.PrintSelf();
-            boll2.PrintSelf();
+            // boll2.PrintSelf();
             while (true)
             {
                 SetCursorPosition(35, 1);
                 Write(sec_scince_start);
-                SetCursorPosition(35, 3);
-                Write(steps_scince_start);
-                //Write(bollen.XyToString());
+                // SetCursorPosition(35, 3);
+                // Write(steps_scince_start);
+                // Write(bollen.XyToString());
                 // Write(steps_scince_start);
 
                 if (sec_scince_start > sec)
                 {
                     bollen.Move();
-                    boll2.Move();
+                    // boll2.Move();
                     sec = sec_scince_start;
                     bollen.PrintSelfClearTrail();
-                    boll2.PrintSelfClearTrail();
+                    // boll2.PrintSelfClearTrail();
                 }
             }
         }
